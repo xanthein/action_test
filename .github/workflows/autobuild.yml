@@ -39,5 +39,5 @@ jobs:
           GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
       - name: Upload to PPA
         run: |
-          echo $pwd
-          dput ppa:dirksu/test *.changes
+          find
+          dput ppa:dirksu/test repo/contrib/*.changes
