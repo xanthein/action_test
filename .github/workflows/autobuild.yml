@@ -31,7 +31,8 @@ jobs:
       - name: Build pacakge
         run: |
           cd repo/contrib/hello
-          key=$(gpg --list-keys --with-colons |  awk -F: '/^pub:/ { print $5 }')
+          key=$(gpg --list-secret-keys --with-colons |  awk -F: '/^fpr:/ { print $10 }')
+          echo $key
           dpkg-buildpackage -S --sign-key="$key" --sign-command=/tmp/sign.sh
       - name: Upload to PPA
         run: |
