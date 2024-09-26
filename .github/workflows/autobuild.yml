@@ -11,7 +11,7 @@ jobs:
           echo -n "$GPG_SIGNING_KEY" | gpg --import --batch
         env:
           GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
-      - name: Add the custom gpg siging program
+      - name: Add the custom gpg signing program
         run: |
           cat > /tmp/gpg.sh << EOF
           #!/bin/bash
@@ -22,7 +22,7 @@ jobs:
           GPG_KEY_PASSPHRASE: ${{ secrets.GPG_KEY_PASSPHRASE }}
       - name: Install package
         run: |
-          sudo apt-get install dpkg-dev devscripts
+          sudo apt-get install dpkg-dev devscripts debhelper
       - name: Checkout code
         uses: actions/checkout@v4
         with:
