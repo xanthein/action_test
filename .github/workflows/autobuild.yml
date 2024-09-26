@@ -16,6 +16,7 @@ jobs:
           cat > /tmp/sign.sh << EOF
           #!/bin/bash
           echo "Start the signing process..."
+          echo $@
           gpg --batch --pinentry-mode=loopback --passphrase $GPG_KEY_PASSPHRASE $@
           EOF
           chmod +x /tmp/sign.sh
