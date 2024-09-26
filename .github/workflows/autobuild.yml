@@ -12,14 +12,14 @@ jobs:
         env:
           GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
       - name: Add the custom gpg siging program
-          run: |
-            cat > /tmp/gpg.sh << EOF
-              #!/bin/bash
-              gpg --batch --pinentry-mode=loopback --passphrase $GPG_KEY_PASSPHRASE $@
-              EOF
-            chmod +x /tmp/gpg.sh
-          env:
-            GPG_KEY_PASSPHRASE: ${{ secrets.GPG_KEY_PASSPHRASE }}
+        run: >
+          cat > /tmp/gpg.sh << EOF
+          #!/bin/bash
+          gpg --batch --pinentry-mode=loopback --passphrase $GPG_KEY_PASSPHRASE $@
+          EOF
+          chmod +x /tmp/gpg.sh
+        env:
+          GPG_KEY_PASSPHRASE: ${{ secrets.GPG_KEY_PASSPHRASE }}
       - name: Install package
         run: |
           sudo apt-get install dpkg-dev devscripts
@@ -32,6 +32,6 @@ jobs:
           cd repo/contrib/hello
           key=$(gpg --list-keys --with-colons |  awk -F: '/^pub:/ { print $5 }')
           dpkg-buildpackage -S --sign-key="$KEY" --sign-command=/tmp/gpg.sh
-       - name: Upload to PPA
-         run: |
-           dput ppa:dirksu/test *.changes
+      - name: Upload to PPA
+        run: |
+          dput ppa:dirksu/test *.changes
