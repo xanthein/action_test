@@ -11,7 +11,7 @@ jobs:
           echo -n "$GPG_SIGNING_KEY" | gpg --import --batch
         env:
           GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
-      - name: Add the custom gpg signing program
+      - name: Add the custom signing program
         run: |
           cat > /tmp/sign.sh << EOF
           #!/bin/bash
@@ -19,11 +19,10 @@ jobs:
           echo \$@
           gpg --batch --pinentry-mode=loopback --passphrase "$GPG_KEY_PASSPHRASE" \$@
           EOF
-          cat /tmp/sign.sh
           chmod +x /tmp/sign.sh
         env:
           GPG_KEY_PASSPHRASE: ${{ secrets.GPG_KEY_PASSPHRASE }}
-      - name: Install package
+      - name: Install packages
         run: |
           sudo apt-get install dpkg-dev devscripts debhelper
       - name: Checkout code
@@ -33,11 +32,9 @@ jobs:
       - name: Build pacakge
         run: |
           cd repo/contrib/hello
-          gpg --list-secret-keys
           dpkg-buildpackage -S --sign-key="$GPG_KEY_ID" --sign-command=/tmp/sign.sh
         env:
           GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
       - name: Upload to PPA
         run: |
-          find
           dput ppa:dirksu/test repo/contrib/*.changes
