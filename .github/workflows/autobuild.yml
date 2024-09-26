@@ -8,7 +8,7 @@ jobs:
     name: Create Package
     runs-on: ubuntu-latest
     steps:
-     - name: Configure GPG Key
+      - name: Configure GPG Key
        run: |
          echo -n "$GPG_SIGNING_KEY" | base64 --decode | gpg --import
        env:
