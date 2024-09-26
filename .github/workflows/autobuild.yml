@@ -12,7 +12,7 @@ jobs:
         env:
           GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
       - name: Add the custom gpg siging program
-        run: >
+        run: |
           cat > /tmp/gpg.sh << EOF
           #!/bin/bash
           gpg --batch --pinentry-mode=loopback --passphrase $GPG_KEY_PASSPHRASE $@
