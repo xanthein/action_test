@@ -1,3 +1,9 @@
+hello (2.10-2ubuntu5) noble; urgency=medium
+
+  * Rebuild for noble
+
+ -- Dirk Su <dirk.su@canonical.com>  Fri, 27 Sep 2024 09:42:19 +0800
+
 hello (2.10-2ubuntu4) jammy; urgency=medium
 
   * No-change rebuild for ppc64el baseline bump.
